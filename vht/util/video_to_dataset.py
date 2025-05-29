@@ -117,7 +117,7 @@ class Video2DatasetConverter:
         """
         # 68 facial landmark detector
         fa = face_alignment.FaceAlignment(
-            ### LCX 修改_3D为THREE_D:20250530
+            ### LCX 修改_3D为THREE_D
             face_alignment.LandmarksType.THREE_D, flip_input=True, device="cuda"
         )
         frames = self._get_frame_list()
