@@ -257,7 +257,7 @@ class SHRenderer(torch.nn.Module):
         tex_stack = torch.cat(
             [albedos[[i]].expand(K_faces, -1, -1, -1) for i in range(N)]
         )
-        head = F.grid_sample(tex_stack, pixel_uvs[..., :2], align_corners=False)
+        head = F.grid_sample(tex_stack, pixel_uvs[..., :2], align_corners=True)  ###LCX20250601: grid_sample或affine_grid，需要显式地添加：align_corners=True
 
         # features shape N*K_faces x C x H x W -> N, H, W, K_faces, C
         features = head.reshape(N, K_faces, -1, H, W).permute(0, 3, 4, 1, 2)
