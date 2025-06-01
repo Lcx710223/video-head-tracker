@@ -740,7 +740,7 @@ class FlameTracker:
         decays = self._trimmed_decays(sample["frame_index"] == 0)
         gt_rgb = blur_tensors(gt_rgb, sigma=decays["blur_sigma"].get(step_i))[0]
 
-        screen_colors = F.grid_sample(gt_rgb, screen_coords)
+        screen_colors = F.grid_sample(gt_rgb, screen_coords, align_corners=True)  ###LCX:代码中用到 grid_sample 或 affine_grid 的地方，需要显式地添加 align_corners=True。
 
         photo_loss = (predicted_images - screen_colors)[mask].abs()
         return photo_loss.sum() / mask.sum()
