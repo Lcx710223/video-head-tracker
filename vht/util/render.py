@@ -257,7 +257,9 @@ class SHRenderer(torch.nn.Module):
         tex_stack = torch.cat(
             [albedos[[i]].expand(K_faces, -1, -1, -1) for i in range(N)]
         )
-        head = F.grid_sample(tex_stack, pixel_uvs[..., :2], align_corners=True)  ###LCX20250601: grid_sample或affine_grid，需要显式地添加：align_corners=True
+        ### PyTorch 1.3.0 版本后，torch.nn.functional.grid_sample 和 affine_grid 的 align_corners 参数默认变为 False，
+        ### 这会导致输出行为和老版本不一致。官方建议显式指定 align_corners 参数。LCX20250601。
+        head = F.grid_sample(tex_stack, pixel_uvs[..., :2], align_corners=True)  ###LCX: grid_sample或affine_grid，需要显式地添加：align_corners=True
 
         # features shape N*K_faces x C x H x W -> N, H, W, K_faces, C
         features = head.reshape(N, K_faces, -1, H, W).permute(0, 3, 4, 1, 2)
