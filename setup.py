@@ -1,3 +1,5 @@
+### LCX260530 UBUNTU下安装vht,pytorch3d==0.7.3有轮子。其他适配即可。
+
 from setuptools import setup, find_packages
 
 setup(
@@ -7,12 +9,11 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "ConfigArgParse",
-        "matplotlib",
+        "numpy",
         "scipy",
         "opencv-python",
-        "face-alignment",
-        "face-detection-tflite",
-        "trimesh",
-        "pyrender",
+        "torch==2.0.1",
+        "torchvision==0.15.2",
+        "pytorch3d==0.7.3",
     ],
 )
